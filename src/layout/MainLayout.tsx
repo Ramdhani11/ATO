@@ -21,7 +21,8 @@ const MainLayout = () => {
 
   return (
     <RoleContext.Provider value={{ role, toggleRole }}>
-      <div className="w-full max-w-[1600px] h-screen flex">
+      {/* <div></div> */}
+      <div className="bg-white w-full m-auto max-w-[1600px] h-screen flex rounded-xl border-[1px] border-lightGrey">
         <Menu />
         <Sidebar />
         <Mainbar />
