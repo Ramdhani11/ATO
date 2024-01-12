@@ -3,7 +3,7 @@ import { chatgpt, chats, person, user } from "../assets";
 import { RoleContext } from "../layout/MainLayout";
 
 const Menu = () => {
-  const { toggleRole, role } = useContext(RoleContext);
+  const { toggleRole, role, togglePopup } = useContext(RoleContext);
   const checkRole = role === "107";
 
   return (
@@ -18,11 +18,17 @@ const Menu = () => {
           <div className="cursor-pointer w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center bg-lightGrey rounded-lg">
             <img src={chats} alt="chats" />
           </div>
-          <div className="cursor-pointer rounded-lg hover:bg-lightGrey w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center">
+          <div
+            onClick={() => alert("Feature not yet available!")}
+            className="cursor-pointer rounded-lg hover:bg-lightGrey w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center"
+          >
             <img src={person} alt="person" />
           </div>
           {checkRole ? (
-            <div className="cursor-pointer rounded-lg hover:bg-lightGrey w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center">
+            <div
+              onClick={togglePopup}
+              className="cursor-pointer rounded-lg hover:bg-lightGrey w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center"
+            >
               <img src={chatgpt} alt="chatgpt" />
             </div>
           ) : null}
