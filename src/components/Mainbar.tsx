@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { arrow, gpt, pin } from "../assets";
-import OpenAI from "openai";
 import Navbar from "./Navbar";
 import { dummy } from "../dummy/dummy.api";
 import ChatBar, { ChatbarProps } from "./ChatBar";
 import { RoleContext } from "../layout/MainLayout";
 import { v4 as uuid } from "uuid";
+import { openai } from "../utils/configuration.api";
 
 const Mainbar = () => {
   const [text, setText] = useState("");
@@ -16,18 +16,13 @@ const Mainbar = () => {
 
   const [loader, setLoader] = useState(false);
 
-  const openai = new OpenAI({
-    apiKey: "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",
-    dangerouslyAllowBrowser: true,
-  });
-
   const apis = async (chat: string) => {
     const completion = await openai.completions.create({
       model: "gpt-3.5-turbo-instruct",
       prompt: `Translate the following ${
         role === "107" ? "English text to Japanese" : "English text to Japanese"
       } : ${chat}`,
-      max_tokens: 60,
+      max_tokens: 100,
     });
     setTranslate(completion.choices[0].text);
   };
