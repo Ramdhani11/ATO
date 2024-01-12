@@ -5,6 +5,7 @@ import { RoleContext } from "../layout/MainLayout";
 
 const Sidebar = () => {
   const { role } = useContext(RoleContext);
+
   return (
     <div className="w-[444px] h-screen p-6 flex flex-col items-center gap-6 border-r-[2px] border-l-[2px] border-lightGrey">
       <div className="flex items-center gap-[200px]">

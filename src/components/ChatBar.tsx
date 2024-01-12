@@ -18,22 +18,26 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
   const { role } = useContext(RoleContext);
 
   const hour = dayjs(data.date).hour();
-  const minute = dayjs(data.date).minute();
+  const minute = dayjs(data.date).minute().toString();
+
+  const fixMinute = minute.length === 1 ? `0${minute}` : minute;
+
+  const formatHour = hour + "." + fixMinute;
 
   if (role === "107") {
     return role === data.speaker ? (
-      <div className="flex flex-col items-end">
-        <div className="bg-secondary w-max p-2 rounded-[10px]">
+      <div className="flex flex-col items-end ">
+        <div className="bg-secondary w-max p-2 rounded-[10px] max-w-[400px]">
           <div className="border-b-[1px] pb-1 border-[#ccc]">
             {data.original_message}
           </div>
           <div>{data.translated_message}</div>
-          <div className="text-end text-sm">{`${hour}.${minute}`}</div>
+          <div className="text-end text-sm">{formatHour}</div>
         </div>
       </div>
     ) : (
       <div>
-        <div className="bg-[#dedede] w-max p-2 rounded-[10px]">
+        <div className="bg-[#dedede] w-max p-2 rounded-[10px] max-w-[400px]">
           <div>
             {switcher ? data.original_message : data.translated_message}
           </div>
@@ -50,14 +54,14 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
   } else {
     return role === data.speaker ? (
       <div className="flex flex-col items-end">
-        <div className="bg-secondary w-max p-2 rounded-[10px]">
+        <div className="bg-secondary w-max p-2 rounded-[10px] max-w-[400px]">
           <div>{data.original_message}</div>
           <div className="text-end text-sm">{`${hour}.${minute}`}</div>
         </div>
       </div>
     ) : (
       <div>
-        <div className="bg-[#dedede] w-max p-2 rounded-[10px]">
+        <div className="bg-[#dedede] w-max p-2 rounded-[10px] max-w-[400px]">
           <div className="border-b-[1px] pb-1 border-[#ccc]">
             {data.translated_message}
           </div>

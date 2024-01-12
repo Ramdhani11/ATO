@@ -16,6 +16,8 @@ const Mainbar = () => {
 
   const [loader, setLoader] = useState(false);
 
+  const { toggleRole, setLastData, lastData } = useContext(RoleContext);
+
   const apis = async (chat: string) => {
     const completion = await openai.completions.create({
       model: "gpt-3.5-turbo-instruct",
@@ -52,7 +54,7 @@ const Mainbar = () => {
         block: "end",
       });
     }
-  }, [datas?.length]);
+  }, [datas?.length, toggleRole]);
 
   const handleEnter = (e: any) => {
     if (e.key === "Enter") {
@@ -66,6 +68,7 @@ const Mainbar = () => {
       };
 
       datas ? setDatas([...datas, dataPush]) : null;
+      setLastData(dataPush);
       setText("");
       setTranslate("");
     }
@@ -87,10 +90,11 @@ const Mainbar = () => {
     };
 
     datas ? setDatas([...datas, dataPush]) : null;
+    setLastData(dataPush);
     setText("");
     setTranslate("");
 
-    console.log(dataPush);
+    console.log(lastData);
   };
 
   return (
