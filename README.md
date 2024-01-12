@@ -2,7 +2,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/Ramdhani11/ATO/blob/main/)
+![General](https://github.com/Ramdhani11/ATO/blob/main/public/General.png?raw=true)
 
 ### Built With
 
