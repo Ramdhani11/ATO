@@ -61,6 +61,7 @@ ou can find your API key at https://platform.openai.com/account/api-keys. -->
 ### General
 
 ![general](https://github.com/Ramdhani11/ATO/blob/main/public/General.png?raw=true)
+![107](https://github.com/Ramdhani11/ATO/blob/main/public/107_1.png?raw=true)
 ![general](https://github.com/Ramdhani11/ATO/blob/main/public/General_2.png?raw=true)
 
 ### ATO Side
@@ -71,7 +72,9 @@ ou can find your API key at https://platform.openai.com/account/api-keys. -->
 
 ### 107 Side
 
+![general](https://github.com/Ramdhani11/ATO/blob/main/public/General.png?raw=true)
 ![107](https://github.com/Ramdhani11/ATO/blob/main/public/107_1.png?raw=true)
+![general](https://github.com/Ramdhani11/ATO/blob/main/public/General_2.png?raw=true)
 ![107](https://github.com/Ramdhani11/ATO/blob/main/public/107_2.png?raw=true)
 ![107](https://github.com/Ramdhani11/ATO/blob/main/public/107_3.png?raw=true)
 
