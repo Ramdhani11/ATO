@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useContext, useEffect, useRef, useState } from "react";
 import { arrow, gpt, pin } from "../assets";
 import Navbar from "./Navbar";
 import { dummy } from "../dummy/dummy.api";
@@ -10,42 +10,39 @@ import { openai } from "../utils/configuration.api";
 const Mainbar = () => {
   const [text, setText] = useState("");
   const [translate, setTranslate] = useState("");
-  const refDiv = useRef<HTMLDivElement>(null);
-  const { role } = useContext(RoleContext);
+  const [loader, setLoader] = useState(false);
   const [datas, setDatas] = useState<ChatbarProps[]>();
 
-  const [loader, setLoader] = useState(false);
+  const refDiv = useRef<HTMLDivElement>(null);
 
-  const { toggleRole, setLastData, lastData } = useContext(RoleContext);
+  const { toggleRole, setLastData, role } = useContext(RoleContext);
 
   const apis = async (chat: string) => {
-    const completion = await openai.completions.create({
-      model: "gpt-3.5-turbo-instruct",
-      prompt: `Translate the following ${
-        role === "107" ? "English text to Japanese" : "English text to Japanese"
-      } : ${chat}`,
-      max_tokens: 100,
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "translate following sentence to japanese without the romanji if the sentence in english, and do the opposite if sentence in japanese. Show only the translation:" +
+            chat,
+        },
+      ],
     });
-    setTranslate(completion.choices[0].text);
+    return completion.choices[0]?.message.content;
   };
 
-  useEffect(() => {
-    if (!text) {
-      null;
-    } else if (text.length < 4) {
-      setLoader(!loader);
-    } else if (text.length > 4) {
-      setLoader(false);
-      apis(text);
-    }
-    if (text.length === 0 && text.length < 4) {
-      setTranslate("");
-    }
-  }, [text]);
+  const checkRole = role === "107";
 
   useEffect(() => {
     setDatas(dummy);
   }, []);
+
+  useEffect(() => {
+    if (text === "") {
+      setTranslate("");
+    }
+  }, [text, translate]);
 
   useEffect(() => {
     if (datas?.length) {
@@ -56,45 +53,45 @@ const Mainbar = () => {
     }
   }, [datas?.length, toggleRole]);
 
-  const handleEnter = (e: any) => {
-    if (e.key === "Enter") {
-      const dataPush = {
-        id: uuid(),
-        speaker: role,
-        roomId: "exaigsuidk212",
-        original_message: text,
-        translated_message: translate,
-        date: Date.now(),
-      };
-
-      datas ? setDatas([...datas, dataPush]) : null;
-      setLastData(dataPush);
-      setText("");
-      setTranslate("");
-    }
-  };
-
-  const handleSubmit = () => {
-    if (!text || text.length < 4) {
-      alert("Please enter words, min 4 letter!");
-      return;
-    }
-
+  const dataLogic = (convert: string) => {
     const dataPush = {
       id: uuid(),
       speaker: role,
       roomId: "exaigsuidk212",
       original_message: text,
-      translated_message: translate,
+      translated_message: convert,
       date: Date.now(),
     };
-
     datas ? setDatas([...datas, dataPush]) : null;
     setLastData(dataPush);
     setText("");
     setTranslate("");
+    return;
+  };
 
-    console.log(lastData);
+  const handleEnter = async (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      if (!text || text.length < 1) {
+        alert("Please enter words!");
+        return;
+      }
+      setLoader(true);
+      const result = await apis(text);
+      result && dataLogic(result);
+      setLoader(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!text || text.length < 1) {
+      alert("Please enter words!");
+      return;
+    }
+
+    setLoader(true);
+    const result = await apis(text);
+    result && dataLogic(result);
+    setLoader(false);
   };
 
   return (
@@ -105,15 +102,21 @@ const Mainbar = () => {
         {datas?.map((data) => {
           return <ChatBar key={data.id} data={data} />;
         })}
+        {loader && (
+          <div className="flex justify-end">
+            <div className="loader" />
+          </div>
+        )}
+
         <div ref={refDiv} />
       </div>
       <div className="bg-lightGrey p-3 ">
-        {role === "107" ? (
+        {checkRole ? (
           <div className="pb-3">
             {loader ? (
               <div className="loader" />
             ) : (
-              <div>{text ? translate : null}</div>
+              <div>{translate ? translate : null}</div>
             )}
 
             <div className="pt-3">
@@ -122,7 +125,7 @@ const Mainbar = () => {
                   <img src={gpt} alt="gpt-icon" />
                 </div>
                 <span className="text-[#8a8a8a] text-sm font-semibold">
-                  Translate by ChatGPT-4
+                  Auto-translate by ChatGPT-4
                 </span>
               </div>
             </div>
@@ -148,7 +151,7 @@ const Mainbar = () => {
               onClick={() => handleSubmit()}
               className="cursor-pointer hover:bg-blue-900 w-[34px] h-[34px] bg-primary rounded-[50%] grid place-items-center"
             >
-              <img src={arrow} alt="arrow" />
+              <img className="w-[18px]" src={arrow} alt="arrow" />
             </div>
           </div>
         </div>
