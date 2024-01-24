@@ -9,6 +9,8 @@ export interface ChatbarProps {
   speaker: string;
   original_message: string;
   translated_message: string;
+  english_text: string;
+  japanese_text: string;
   date: number;
 }
 
@@ -29,21 +31,21 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
       <div className="flex flex-col items-end ">
         <div className="bg-secondary w-max p-2 rounded-[10px] max-w-[400px]">
           <div className="border-b-[1px] pb-1 border-[#ccc]">
-            {data.original_message}
+            {data.english_text}
           </div>
-          <div>{data.translated_message}</div>
+          <div>{data.japanese_text}</div>
           <div className="text-end text-sm">{formatHour}</div>
         </div>
       </div>
     ) : (
       <div>
         <div className="bg-[#dedede] w-max p-2 rounded-[10px] max-w-[400px]">
-          <div>
-            {switcher ? data.original_message : data.translated_message}
+          <div>{switcher ? data.japanese_text : data.english_text}</div>
+          <div className="text-end text-sm">
+            <div className="text-end text-sm">{formatHour}</div>
           </div>
-          <div className="text-end text-sm">{`${hour}.${minute}`}</div>
         </div>
-        <div className="py-1 flex gap-2 items-center cursor-pointer">
+        <div className="py-1 flex w-max gap-2 items-center cursor-pointer">
           <img className="w-[24px]" src={ai} alt="arificalintelegent" />
           <span className="text-sm" onClick={() => setSwitcher(!switcher)}>
             Show {switcher ? "Translate" : "Original"}
@@ -55,18 +57,22 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
     return role === data.speaker ? (
       <div className="flex flex-col items-end">
         <div className="bg-secondary w-max p-2 rounded-[10px] max-w-[400px]">
-          <div>{data.original_message}</div>
-          <div className="text-end text-sm">{`${hour}.${minute}`}</div>
+          <div>{data.japanese_text}</div>
+          <div className="text-end text-sm">
+            <div className="text-end text-sm">{formatHour}</div>
+          </div>
         </div>
       </div>
     ) : (
       <div>
         <div className="bg-[#dedede] w-max p-2 rounded-[10px] max-w-[400px]">
           <div className="border-b-[1px] pb-1 border-[#ccc]">
-            {data.translated_message}
+            {data.japanese_text}
           </div>
-          <div>{data.original_message}</div>
-          <div className="text-end text-sm">{`${hour}.${minute}`}</div>
+          <div>{data.english_text}</div>
+          <div className="text-end text-sm">
+            <div className="text-end text-sm">{formatHour}</div>
+          </div>
         </div>
       </div>
     );

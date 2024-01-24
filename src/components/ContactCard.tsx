@@ -25,16 +25,16 @@ const ContactCard = ({ active }: CardProps) => {
   }
 
   const originalMessage = lastData
-    ? truncateString(lastData.original_message, 30)
+    ? truncateString(lastData.english_text, 30)
     : null;
   const transtaledMessage = lastData
-    ? truncateString(lastData.translated_message, 30)
+    ? truncateString(lastData.japanese_text, 30)
     : null;
 
   const headMessage =
     role === lastData?.speaker
-      ? `You : ${originalMessage} `
-      : transtaledMessage;
+      ? `You : ${checkRole ? originalMessage : transtaledMessage} `
+      : `${checkRole ? originalMessage : transtaledMessage}`;
 
   return (
     <div

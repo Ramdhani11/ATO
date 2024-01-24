@@ -29,13 +29,17 @@ const Popup = () => {
           <input
             type="text"
             className="text-sm bg-white p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]"
+            name="chatgpt-prompt"
           />
         </div>
         <div className="flex flex-col ">
           <h4 className="text-[#8a8a8a] text-sm pb-3">
             How would you like ChatGPT to respond?
           </h4>
-          <textarea className="text-sm bg-white min-h-[180px] max-h-max p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]" />
+          <textarea
+            name="chatgpt-input"
+            className="text-sm bg-white min-h-[180px] max-h-max p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]"
+          />
         </div>
         <div className="flex flex-1 justify-end gap-2">
           <Button

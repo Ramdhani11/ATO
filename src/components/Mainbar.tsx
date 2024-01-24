@@ -1,21 +1,20 @@
 import { KeyboardEvent, useContext, useEffect, useRef, useState } from "react";
 import { arrow, gpt, pin } from "../assets";
 import Navbar from "./Navbar";
-import { dummy } from "../dummy/dummy.api";
 import ChatBar, { ChatbarProps } from "./ChatBar";
 import { RoleContext } from "../layout/MainLayout";
-import { v4 as uuid } from "uuid";
 import { openai } from "../utils/configuration.api";
+import { axiosInstance } from "../config/axiosInstance";
+import { getAll } from "../api/conversation.api";
 
 const Mainbar = () => {
   const [text, setText] = useState("");
-  const [translate, setTranslate] = useState("");
   const [loader, setLoader] = useState(false);
   const [datas, setDatas] = useState<ChatbarProps[]>();
 
   const refDiv = useRef<HTMLDivElement>(null);
 
-  const { toggleRole, setLastData, role } = useContext(RoleContext);
+  const { toggleRole, role } = useContext(RoleContext);
 
   const apis = async (chat: string) => {
     const completion = await openai.chat.completions.create({
@@ -32,17 +31,27 @@ const Mainbar = () => {
     return completion.choices[0]?.message.content;
   };
 
-  const checkRole = role === "107";
-
-  useEffect(() => {
-    setDatas(dummy);
-  }, []);
-
-  useEffect(() => {
-    if (text === "") {
-      setTranslate("");
+  const postMessage = async (text: string) => {
+    try {
+      setLoader(true);
+      const convert_english = checkRole ? text : await apis(text);
+      await axiosInstance.post("/conversations", {
+        user_id: "user1",
+        speaker: role,
+        company_id: 123,
+        chat_room_id: "room13",
+        original_message: convert_english,
+        date: Date.now(),
+      });
+      setText("");
+      setLoader(false);
+    } catch (error: any) {
+      console.log(error);
+      setLoader(false);
     }
-  }, [text, translate]);
+  };
+
+  const checkRole = role === "107";
 
   useEffect(() => {
     if (datas?.length) {
@@ -51,23 +60,12 @@ const Mainbar = () => {
         block: "end",
       });
     }
-  }, [datas?.length, toggleRole]);
-
-  const dataLogic = (convert: string) => {
-    const dataPush = {
-      id: uuid(),
-      speaker: role,
-      roomId: "exaigsuidk212",
-      original_message: text,
-      translated_message: convert,
-      date: Date.now(),
-    };
-    datas ? setDatas([...datas, dataPush]) : null;
-    setLastData(dataPush);
-    setText("");
-    setTranslate("");
-    return;
-  };
+  }, [datas?.length, toggleRole, loader]);
+  useEffect(() => {
+    getAll()
+      .then((res) => setDatas(res))
+      .catch((err) => console.log(err));
+  }, [datas]);
 
   const handleEnter = async (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -75,10 +73,7 @@ const Mainbar = () => {
         alert("Please enter words!");
         return;
       }
-      setLoader(true);
-      const result = await apis(text);
-      result && dataLogic(result);
-      setLoader(false);
+      await postMessage(text);
     }
   };
 
@@ -87,11 +82,7 @@ const Mainbar = () => {
       alert("Please enter words!");
       return;
     }
-
-    setLoader(true);
-    const result = await apis(text);
-    result && dataLogic(result);
-    setLoader(false);
+    await postMessage(text);
   };
 
   return (
@@ -113,11 +104,7 @@ const Mainbar = () => {
       <div className="bg-lightGrey p-3 ">
         {checkRole ? (
           <div className="pb-3">
-            {loader ? (
-              <div className="loader" />
-            ) : (
-              <div>{translate ? translate : null}</div>
-            )}
+            {/* {loader ? <div className="loader" /> : null} */}
 
             <div className="pt-3">
               <div className="flex gap-2">
@@ -140,15 +127,17 @@ const Mainbar = () => {
             <img className="w-[20px]" src={pin} alt="pin" />
           </div>
           <input
+            name="chatbar"
             value={text}
             onKeyDown={(e) => handleEnter(e)}
             type="text"
             className="bg-white p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]"
+            // disabled
             onChange={(e) => setText(e.target.value)}
           />
           <div className="py-1">
             <div
-              onClick={() => handleSubmit()}
+              onClick={() => !loader && handleSubmit()}
               className="cursor-pointer hover:bg-blue-900 w-[34px] h-[34px] bg-primary rounded-[50%] grid place-items-center"
             >
               <img className="w-[18px]" src={arrow} alt="arrow" />
