@@ -1,15 +1,19 @@
 import { useContext } from "react";
 import { RoleContext } from "../layout/MainLayout";
 import dayjs from "dayjs";
+import useSWR from "swr";
+import { fecther } from "./Mainbar";
 
 interface CardProps {
   active?: boolean;
 }
 
 const ContactCard = ({ active }: CardProps) => {
-  const { role, lastData } = useContext(RoleContext);
+  const { role } = useContext(RoleContext);
 
   const checkRole = role === "107";
+  const { data, isLoading } = useSWR("/conversations", fecther);
+  const lastData = data?.slice(-1)[0];
 
   const hour = dayjs(lastData?.date).hour();
   const minute = dayjs(lastData?.date).minute().toString();
@@ -48,10 +52,10 @@ const ContactCard = ({ active }: CardProps) => {
       <div className="flex flex-col flex-1">
         <div className="flex justify-between font-semibold">
           <h3>{checkRole ? "ATO - Yuki" : "107 - Vincent"}</h3>
-          <h3>{formatHour}</h3>
+          <h3>{isLoading ? "" : formatHour}</h3>
         </div>
         <div className="flex justify-between">
-          <span>{headMessage}</span>
+          <span>{isLoading ? "Wait..." : headMessage}</span>
           <div className="w-[20px] h-[20px] rounded-[50%] text-center leading-[20px] bg-primary text-white font-semibold">
             1
           </div>

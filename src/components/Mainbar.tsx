@@ -5,12 +5,17 @@ import ChatBar, { ChatbarProps } from "./ChatBar";
 import { RoleContext } from "../layout/MainLayout";
 import { openai } from "../utils/configuration.api";
 import { axiosInstance } from "../config/axiosInstance";
-import { getAll } from "../api/conversation.api";
+import useSWR from "swr";
+
+export const fecther = (url: string) =>
+  axiosInstance.get(url).then((res) => res.data);
 
 const Mainbar = () => {
+  const { data, mutate } = useSWR("/conversations", fecther);
+
   const [text, setText] = useState("");
   const [loader, setLoader] = useState(false);
-  const [datas, setDatas] = useState<ChatbarProps[]>();
+  // const [datas, setDatas] = useState<ChatbarProps[]>();
 
   const refDiv = useRef<HTMLDivElement>(null);
 
@@ -45,6 +50,7 @@ const Mainbar = () => {
       });
       setText("");
       setLoader(false);
+      mutate();
     } catch (error: any) {
       console.log(error);
       setLoader(false);
@@ -54,18 +60,17 @@ const Mainbar = () => {
   const checkRole = role === "107";
 
   useEffect(() => {
-    if (datas?.length) {
-      refDiv.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-      });
-    }
-  }, [datas?.length, toggleRole, loader]);
-  useEffect(() => {
-    getAll()
-      .then((res) => setDatas(res))
-      .catch((err) => console.log(err));
-  }, [datas]);
+    refDiv.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [toggleRole, data?.length, loader]);
+
+  // useEffect(() => {
+  //   getAll()
+  //     .then((res) => setDatas(res))
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const handleEnter = async (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -90,7 +95,7 @@ const Mainbar = () => {
       <Navbar />
       {/* chat board */}
       <div className=" flex-1 px-3 py-3 flex flex-col gap-2 overflow-hidden overflow-y-auto">
-        {datas?.map((data) => {
+        {data?.map((data: ChatbarProps) => {
           return <ChatBar key={data.id} data={data} />;
         })}
         {loader && (
