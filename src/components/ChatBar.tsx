@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { ai } from "../assets";
+import { ai, open_logo } from "../assets";
 import dayjs from "dayjs";
 import { RoleContext } from "../layout/MainLayout";
 
@@ -49,7 +49,7 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
           </div>
         </div>
         <div className="py-1 flex w-max gap-2 items-center cursor-pointer">
-          <img className="w-[24px]" src={ai} alt="arificalintelegent" />
+          <img className="w-[20px]" src={open_logo} alt="arificalintelegent" />
           <span className="text-sm" onClick={() => setSwitcher(!switcher)}>
             Show {switcher ? "Translate" : "Original"}
           </span>
