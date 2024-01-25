@@ -52,10 +52,11 @@ const ContactCard = ({ active }: CardProps) => {
       <div className="flex flex-col flex-1">
         <div className="flex justify-between font-semibold">
           <h3>{checkRole ? "ATO - Yuki" : "107 - Vincent"}</h3>
-          <h3>{isLoading ? "" : formatHour}</h3>
+          <h3>{isLoading ? "" : !formatHour ? "" : formatHour}</h3>
         </div>
         <div className="flex justify-between">
-          <span>{isLoading ? "Wait..." : headMessage}</span>
+          <span>{isLoading ? "Wait..." : !headMessage ? "" : headMessage}</span>
+
           <div className="w-[20px] h-[20px] rounded-[50%] text-center leading-[20px] bg-primary text-white font-semibold">
             1
           </div>

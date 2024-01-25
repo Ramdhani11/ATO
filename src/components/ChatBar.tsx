@@ -12,6 +12,7 @@ export interface ChatbarProps {
   english_text: string;
   japanese_text: string;
   date: number;
+  section: string;
 }
 
 const ChatBar = ({ data }: { data: ChatbarProps }) => {
@@ -26,6 +27,8 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
 
   const formatHour = hour + "." + fixMinute;
 
+  const cekDate = data.section === "Today";
+
   if (role === "107") {
     return role === data.speaker ? (
       <div className="flex flex-col items-end ">
@@ -34,7 +37,7 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
             {data.english_text}
           </div>
           <div>{data.japanese_text}</div>
-          <div className="text-end text-sm">{formatHour}</div>
+          <div className="text-end text-sm">{`${data.section} ${formatHour}`}</div>
         </div>
       </div>
     ) : (
@@ -42,7 +45,7 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
         <div className="bg-[#dedede] w-max p-2 rounded-[10px] max-w-[400px]">
           <div>{switcher ? data.japanese_text : data.english_text}</div>
           <div className="text-end text-sm">
-            <div className="text-end text-sm">{formatHour}</div>
+            <div className="text-end text-sm">{`${data.section} ${formatHour}`}</div>
           </div>
         </div>
         <div className="py-1 flex w-max gap-2 items-center cursor-pointer">
@@ -59,7 +62,9 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
         <div className="bg-secondary w-max p-2 rounded-[10px] max-w-[400px]">
           <div>{data.japanese_text}</div>
           <div className="text-end text-sm">
-            <div className="text-end text-sm">{formatHour}</div>
+            <div className="text-end text-sm">{`${
+              cekDate ? "今日" : data.section
+            } ${formatHour}`}</div>
           </div>
         </div>
       </div>
@@ -71,7 +76,9 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
           </div>
           <div>{data.english_text}</div>
           <div className="text-end text-sm">
-            <div className="text-end text-sm">{formatHour}</div>
+            <div className="text-end text-sm">{`${
+              cekDate ? "今日" : "ケマリン"
+            } ${formatHour}`}</div>
           </div>
         </div>
       </div>

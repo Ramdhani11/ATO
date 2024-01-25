@@ -3,49 +3,46 @@ import { arrow, gpt, pin } from "../assets";
 import Navbar from "./Navbar";
 import ChatBar, { ChatbarProps } from "./ChatBar";
 import { RoleContext } from "../layout/MainLayout";
-import { openai } from "../utils/configuration.api";
 import { axiosInstance } from "../config/axiosInstance";
 import useSWR from "swr";
+import dayjs from "dayjs";
 
 export const fecther = (url: string) =>
   axiosInstance.get(url).then((res) => res.data);
 
 const Mainbar = () => {
-  const { data, mutate } = useSWR("/conversations", fecther);
+  const { data, mutate, isLoading } = useSWR("/conversations", fecther);
 
   const [text, setText] = useState("");
   const [loader, setLoader] = useState(false);
-  // const [datas, setDatas] = useState<ChatbarProps[]>();
 
   const refDiv = useRef<HTMLDivElement>(null);
 
   const { toggleRole, role } = useContext(RoleContext);
 
-  const apis = async (chat: string) => {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content:
-            "translate following sentence to japanese without the romanji if the sentence in english, and do the opposite if sentence in japanese. Show only the translation:" +
-            chat,
-        },
-      ],
-    });
-    return completion.choices[0]?.message.content;
-  };
+  //   const completion = await openai.chat.completions.create({
+  //     model: "gpt-3.5-turbo",
+  //     messages: [
+  //       {
+  //         role: "system",
+  //         content:
+  //           "translate following sentence to japanese without the romanji if the sentence in english, and do the opposite if sentence in japanese. Show only the translation:" +
+  //           chat,
+  //       },
+  //     ],
+  //   });
+  //   return completion.choices[0]?.message.content;
+  // };
 
   const postMessage = async (text: string) => {
     try {
       setLoader(true);
-      const convert_english = checkRole ? text : await apis(text);
       await axiosInstance.post("/conversations", {
         user_id: "user1",
         speaker: role,
         company_id: 123,
         chat_room_id: "room13",
-        original_message: convert_english,
+        original_message: text,
         date: Date.now(),
       });
       setText("");
@@ -60,17 +57,13 @@ const Mainbar = () => {
   const checkRole = role === "107";
 
   useEffect(() => {
-    refDiv.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-    });
-  }, [toggleRole, data?.length, loader]);
-
-  // useEffect(() => {
-  //   getAll()
-  //     .then((res) => setDatas(res))
-  //     .catch((err) => console.log(err));
-  // }, []);
+    if (data?.length) {
+      refDiv.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  }, [toggleRole, data, loader, isLoading]);
 
   const handleEnter = async (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -90,12 +83,38 @@ const Mainbar = () => {
     await postMessage(text);
   };
 
+  const filterData = data?.map((data: ChatbarProps) => {
+    const { date, english_text, japanese_text, speaker, id } = data;
+    if (
+      dayjs(Date.now()).format("D/MM/YYYY") === dayjs(date).format("D/MM/YYYY")
+    ) {
+      return {
+        id,
+        date,
+        english_text,
+        japanese_text,
+        speaker,
+        section: "Today",
+      };
+    } else {
+      return {
+        id,
+        date,
+        english_text,
+        japanese_text,
+        speaker,
+        section: "Yesterday",
+      };
+    }
+  });
+
   return (
     <div className=" flex flex-1 flex-col relative">
       <Navbar />
       {/* chat board */}
-      <div className=" flex-1 px-3 py-3 flex flex-col gap-2 overflow-hidden overflow-y-auto">
-        {data?.map((data: ChatbarProps) => {
+
+      <div className=" flex-1 px-3 py-3  flex flex-col gap-2 overflow-hidden overflow-y-auto">
+        {filterData?.map((data: ChatbarProps) => {
           return <ChatBar key={data.id} data={data} />;
         })}
         {loader && (
@@ -103,27 +122,23 @@ const Mainbar = () => {
             <div className="loader" />
           </div>
         )}
-
-        <div ref={refDiv} />
+        <div ref={refDiv}></div>
       </div>
       <div className="bg-lightGrey p-3 ">
-        {checkRole ? (
-          <div className="pb-3">
-            {/* {loader ? <div className="loader" /> : null} */}
-
-            <div className="pt-3">
-              <div className="flex gap-2">
-                <div className="w-[20px] h-[20px] overflow-hidden rounded-[50%]">
-                  <img src={gpt} alt="gpt-icon" />
-                </div>
-                <span className="text-[#8a8a8a] text-sm font-semibold">
-                  Auto-translate by ChatGPT-4
-                </span>
+        <div className="pb-3">
+          <div className="">
+            <div className="flex gap-2">
+              <div className="w-[20px] h-[20px] overflow-hidden rounded-[50%]">
+                <img src={gpt} alt="gpt-icon" />
               </div>
+              <span className="text-[#8a8a8a] text-sm font-semibold">
+                {checkRole
+                  ? "Auto-translate by ChatGPT-4"
+                  : "ChatGPT-4 による自動翻訳"}
+              </span>
             </div>
           </div>
-        ) : null}
-
+        </div>
         <div className="flex gap-3 items-end">
           <div
             onClick={() => alert("Feature not yet available!")}
@@ -131,13 +146,13 @@ const Mainbar = () => {
           >
             <img className="w-[20px]" src={pin} alt="pin" />
           </div>
+
           <input
             name="chatbar"
             value={text}
             onKeyDown={(e) => handleEnter(e)}
             type="text"
             className="bg-white p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]"
-            // disabled
             onChange={(e) => setText(e.target.value)}
           />
           <div className="py-1">
