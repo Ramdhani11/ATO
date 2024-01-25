@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { ai, open_logo } from "../assets";
+import { open_logo } from "../assets";
 import dayjs from "dayjs";
 import { RoleContext } from "../layout/MainLayout";
 
