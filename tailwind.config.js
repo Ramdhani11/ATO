@@ -10,7 +10,7 @@ export default {
       },
       backgroundImage: {
         benner:
-          "linear-gradient(to bottom,#C2DBFF4D,#C2DBFF4D),url('./src/benner.jpeg')",
+          "linear-gradient(to bottom,#C2DBFF4D,#C2DBFF4D),url('/assets/benner.jpeg')",
       },
     },
     screens: {
