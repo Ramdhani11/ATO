@@ -34,8 +34,8 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
       <div className="flex flex-col items-end ">
         <div
           className={`${
-            checkTheme && "dark:bg-[#27374d]"
-          } bg-secondary  w-max p-2 rounded-[10px] max-w-[400px]`}
+            checkTheme ? "bg-[#27374d]" : "bg-secondary"
+          }   w-max p-2 rounded-[10px] max-w-[400px]`}
         >
           <div className="border-b-[1px] pb-1 border-[#ccc]">
             {data.english_text}
@@ -48,8 +48,8 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
       <div>
         <div
           className={`${
-            checkTheme && "dark:bg-[#526d82]"
-          } bg-[#dedede]  w-max p-2 rounded-[10px] max-w-[400px]`}
+            checkTheme ? "bg-[#526d82]" : "bg-[#dedede] "
+          }  w-max p-2 rounded-[10px] max-w-[400px]`}
         >
           <div>{switcher ? data.japanese_text : data.english_text}</div>
           <div className="text-end text-sm">
@@ -76,8 +76,8 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
       <div className="flex flex-col items-end">
         <div
           className={`${
-            checkTheme && "dark:bg-[#27374d]"
-          } bg-secondary  w-max p-2 rounded-[10px] max-w-[400px]`}
+            checkTheme ? "dark:bg-[#27374d]" : "bg-secondary"
+          }  w-max p-2 rounded-[10px] max-w-[400px]`}
         >
           <div>{data.japanese_text}</div>
           <div className="text-end text-sm">
@@ -91,8 +91,8 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
       <div>
         <div
           className={`${
-            checkTheme && "dark:bg-[#526d82]"
-          } bg-[#dedede]  w-max p-2 rounded-[10px] max-w-[400px]`}
+            checkTheme ? "dark:bg-[#526d82]" : "bg-[#dedede]"
+          }   w-max p-2 rounded-[10px] max-w-[400px]`}
         >
           <div className="border-b-[1px] pb-1 border-[#ccc]">
             {data.japanese_text}
