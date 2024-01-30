@@ -142,3 +142,7 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+.benner {
+  background-image: linear-gradient(to bottom, #c2dbff4d, #c2dbff4d),
+    url(./assets/benner.jpeg);
+}

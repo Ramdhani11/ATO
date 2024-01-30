@@ -8,10 +8,6 @@ export default {
         secondary: "#c2dbff",
         lightGrey: "#f2f4f6",
       },
-      backgroundImage: {
-        benner:
-          "linear-gradient(to bottom,#C2DBFF4D,#C2DBFF4D),url('/assets/benner.jpeg')",
-      },
     },
     screens: {
       hd: "1366px",
