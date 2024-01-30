@@ -52,7 +52,7 @@ const SettingPopup = () => {
           </h4>
           <label className="switch">
             <input type="checkbox" defaultChecked name="chat" />
-            <span className="slider round"></span>
+            <span className="slider round chat"></span>
           </label>
         </div>
         <div className="py-3 border-b-[1px] border-[#A7B5C4] flex justify-between ">

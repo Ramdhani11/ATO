@@ -99,6 +99,23 @@
   -webkit-transition: 0.4s;
   /* transition: 0.4s; */
 }
+.slider.chat::before {
+  content: "Off";
+  display: grid;
+  font-weight: 500;
+  color: #fff;
+  place-items: center;
+  font-size: 11px;
+}
+
+input:checked + .slider.chat::before {
+  content: "On";
+  display: grid;
+  font-weight: 500;
+  color: #fff;
+  place-items: center;
+  font-size: 11px;
+}
 
 .slider.theme::before {
   background-color: #2196f3;
