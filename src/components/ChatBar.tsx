@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { open_logo } from "../assets";
+import { open_logo, open_logo_dark } from "../assets";
 import dayjs from "dayjs";
 import { RoleContext } from "../layout/MainLayout";
 
@@ -18,7 +18,7 @@ export interface ChatbarProps {
 const ChatBar = ({ data }: { data: ChatbarProps }) => {
   const [switcher, setSwitcher] = useState(false);
 
-  const { role } = useContext(RoleContext);
+  const { role, checkTheme } = useContext(RoleContext);
 
   const hour = dayjs(data.date).hour();
   const minute = dayjs(data.date).minute().toString();
@@ -32,7 +32,11 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
   if (role === "107") {
     return role === data.speaker ? (
       <div className="flex flex-col items-end ">
-        <div className="bg-secondary w-max p-2 rounded-[10px] max-w-[400px]">
+        <div
+          className={`${
+            checkTheme && "dark:bg-[#27374d]"
+          } bg-secondary  w-max p-2 rounded-[10px] max-w-[400px]`}
+        >
           <div className="border-b-[1px] pb-1 border-[#ccc]">
             {data.english_text}
           </div>
@@ -42,15 +46,26 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
       </div>
     ) : (
       <div>
-        <div className="bg-[#dedede] w-max p-2 rounded-[10px] max-w-[400px]">
+        <div
+          className={`${
+            checkTheme && "dark:bg-[#526d82]"
+          } bg-[#dedede]  w-max p-2 rounded-[10px] max-w-[400px]`}
+        >
           <div>{switcher ? data.japanese_text : data.english_text}</div>
           <div className="text-end text-sm">
             <div className="text-end text-sm">{`${data.section} ${formatHour}`}</div>
           </div>
         </div>
         <div className="py-1 flex w-max gap-2 items-center cursor-pointer">
-          <img className="w-[20px]" src={open_logo} alt="arificalintelegent" />
-          <span className="text-sm" onClick={() => setSwitcher(!switcher)}>
+          <img
+            className="w-[20px]"
+            src={checkTheme ? open_logo_dark : open_logo}
+            alt="arificalintelegent"
+          />
+          <span
+            className="text-sm select-none"
+            onClick={() => setSwitcher(!switcher)}
+          >
             Show {switcher ? "Translate" : "Original"}
           </span>
         </div>
@@ -59,18 +74,26 @@ const ChatBar = ({ data }: { data: ChatbarProps }) => {
   } else {
     return role === data.speaker ? (
       <div className="flex flex-col items-end">
-        <div className="bg-secondary w-max p-2 rounded-[10px] max-w-[400px]">
+        <div
+          className={`${
+            checkTheme && "dark:bg-[#27374d]"
+          } bg-secondary  w-max p-2 rounded-[10px] max-w-[400px]`}
+        >
           <div>{data.japanese_text}</div>
           <div className="text-end text-sm">
             <div className="text-end text-sm">{`${
-              cekDate ? "今日" : data.section
+              cekDate ? "今日" : "ケマリン"
             } ${formatHour}`}</div>
           </div>
         </div>
       </div>
     ) : (
       <div>
-        <div className="bg-[#dedede] w-max p-2 rounded-[10px] max-w-[400px]">
+        <div
+          className={`${
+            checkTheme && "dark:bg-[#526d82]"
+          } bg-[#dedede]  w-max p-2 rounded-[10px] max-w-[400px]`}
+        >
           <div className="border-b-[1px] pb-1 border-[#ccc]">
             {data.japanese_text}
           </div>

@@ -9,7 +9,7 @@ interface CardProps {
 }
 
 const ContactCard = ({ active }: CardProps) => {
-  const { role } = useContext(RoleContext);
+  const { role, checkTheme } = useContext(RoleContext);
 
   const checkRole = role === "107";
   const { data, isLoading } = useSWR("/conversations", fecther);
@@ -44,7 +44,7 @@ const ContactCard = ({ active }: CardProps) => {
     <div
       className={`w-[412px] px-[8px] flex gap-4 items-center ${
         active && "bg-secondary"
-      } py-4 rounded-[10px]`}
+      } ${checkTheme && "dark:bg-[#27374d]"} py-4 rounded-[10px]`}
     >
       <div className="w-[50px] h-[50px] rounded-[50%] border-[2px] border-primary bg-secondary text-xl leading-[45px] text-center text-primary font-bold">
         {checkRole ? "YU" : "VI"}
@@ -55,7 +55,9 @@ const ContactCard = ({ active }: CardProps) => {
           <h3>{isLoading ? "" : !formatHour ? "" : formatHour}</h3>
         </div>
         <div className="flex justify-between">
-          <span>{isLoading ? "Wait..." : !headMessage ? "" : headMessage}</span>
+          <span className={`${checkTheme && "dark:text-[#8198a8]"}`}>
+            {isLoading ? "Wait..." : !headMessage ? "" : headMessage}
+          </span>
 
           <div className="w-[20px] h-[20px] rounded-[50%] text-center leading-[20px] bg-primary text-white font-semibold">
             1

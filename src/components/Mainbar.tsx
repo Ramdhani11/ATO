@@ -6,6 +6,7 @@ import { RoleContext } from "../layout/MainLayout";
 import { axiosInstance } from "../config/axiosInstance";
 import useSWR from "swr";
 import dayjs from "dayjs";
+import { toast } from "sonner";
 
 export const fecther = (url: string) =>
   axiosInstance.get(url).then((res) => res.data);
@@ -18,7 +19,7 @@ const Mainbar = () => {
 
   const refDiv = useRef<HTMLDivElement>(null);
 
-  const { toggleRole, role } = useContext(RoleContext);
+  const { toggleRole, role, checkTheme } = useContext(RoleContext);
 
   //   const completion = await openai.chat.completions.create({
   //     model: "gpt-3.5-turbo",
@@ -113,7 +114,11 @@ const Mainbar = () => {
       <Navbar />
       {/* chat board */}
 
-      <div className=" flex-1 px-3 py-3  flex flex-col gap-2 overflow-hidden overflow-y-auto">
+      <div
+        className={`flex-1 px-3 py-3 ${
+          checkTheme && "dark:text-white scroll"
+        } flex flex-col gap-2 overflow-hidden overflow-y-auto`}
+      >
         {filterData?.map((data: ChatbarProps) => {
           return <ChatBar key={data.id} data={data} />;
         })}
@@ -124,14 +129,16 @@ const Mainbar = () => {
         )}
         <div ref={refDiv}></div>
       </div>
-      <div className="bg-lightGrey p-3 ">
+      <div
+        className={`bg-lightGrey ${checkTheme && "dark:bg-[#27374d] "} p-3 `}
+      >
         <div className="pb-3">
           <div className="">
             <div className="flex gap-2">
               <div className="w-[20px] h-[20px] overflow-hidden rounded-[50%]">
                 <img src={gpt} alt="gpt-icon" />
               </div>
-              <span className="text-[#8a8a8a] text-sm font-semibold">
+              <span className="text-[#8a8a8a] dark:text-[#9DB2BF] text-sm font-semibold">
                 {checkRole
                   ? "Auto-translate by ChatGPT-4"
                   : "ChatGPT-4 による自動翻訳"}
@@ -139,9 +146,9 @@ const Mainbar = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-3 items-end">
+        <div className="flex gap-3 items-end ">
           <div
-            onClick={() => alert("Feature not yet available!")}
+            onClick={() => toast.info("Feature not yet available!")}
             className="py-1 cursor-pointer"
           >
             <img className="w-[20px]" src={pin} alt="pin" />
@@ -152,7 +159,10 @@ const Mainbar = () => {
             value={text}
             onKeyDown={(e) => handleEnter(e)}
             type="text"
-            className="bg-white p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]"
+            className={`bg-white ${
+              checkTheme &&
+              "dark:bg-[#242c39] dark:text-white dark:border-[#242c39]"
+            } p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]`}
             onChange={(e) => setText(e.target.value)}
           />
           <div className="py-1">

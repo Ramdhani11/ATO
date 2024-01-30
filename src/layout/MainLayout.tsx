@@ -4,6 +4,8 @@ import Menu from "../components/Menu";
 import Sidebar from "../components/Sidebar";
 import { ChatbarProps } from "../components/ChatBar";
 import Popup from "../components/Popup";
+import { Toaster } from "sonner";
+import SettingPopup from "../components/SettingPopup";
 
 export type GlobalContent = {
   role: string;
@@ -12,36 +14,68 @@ export type GlobalContent = {
   setLastData?: any;
   popup?: boolean;
   togglePopup?: () => void;
+  theme: string;
+  toggleTheme?: () => void;
+  toggleSetting?: () => void;
+  checkTheme?: boolean;
+  setting: boolean;
 };
 
 export const RoleContext = createContext<GlobalContent>({
   role: "107",
+  theme: "light",
+  setting: false,
 });
 
 const MainLayout = () => {
   const [role, setRole] = useState("107");
   const [popup, setPopup] = useState(false);
+  const [theme, setTheme] = useState("light");
+  const [setting, setSetting] = useState(false);
 
-  // useEffect(() => {
-  //   lastConversation().then((res) => setLastData(res));
-  // }, []);
+  const checkTheme = theme === "dark";
 
   const toggleRole = () => {
     setRole(role === "107" ? "ATO" : "107");
   };
 
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   const togglePopup = () => {
     setPopup(!popup);
   };
+  const toggleSetting = () => {
+    setSetting(!setting);
+  };
 
   return (
-    <RoleContext.Provider value={{ role, toggleRole, popup, togglePopup }}>
+    <RoleContext.Provider
+      value={{
+        role,
+        toggleRole,
+        popup,
+        togglePopup,
+        theme,
+        toggleTheme,
+        checkTheme,
+        toggleSetting,
+        setting,
+      }}
+    >
       {/* <div></div> */}
-      <div className="bg-white overflow-hidden w-full m-auto max-w-[1600px] h-screen flex rounded-xl border-[1px] border-lightGrey relative">
-        <Popup />
+      <div
+        className={`duration-[400ms] ease-out bg-white ${
+          checkTheme ? "dark:bg-[#151D29] dark:border-[#27374d]" : ""
+        }  overflow-hidden w-full m-auto max-w-[1600px] h-screen flex lineMax:rounded-xl border-[1px] border-lightGrey relative`}
+      >
         <Menu />
         <Sidebar />
         <Mainbar />
+        <Popup />
+        <Toaster position="top-center" duration={800} />
+        <SettingPopup />
       </div>
     </RoleContext.Provider>
   );
