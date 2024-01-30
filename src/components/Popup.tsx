@@ -10,16 +10,15 @@ const Popup = () => {
     <div
       className={`${
         popup ? "absolute" : "hidden"
-      } top-0 right-0 left-0 bottom-0 bg-[#0000000c] ${
-        checkTheme && "dark:bg-[#27374DB2]"
+      } top-0 right-0 left-0 bottom-0  ${
+        checkTheme ? "bg-[#27374DB2]" : "bg-[#0000000c]"
       }  z-20 backdrop-blur-[2px] grid place-content-center`}
       onClick={togglePopup}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`p-6 bg-white ${
-          checkTheme &&
-          "dark:text-white dark:bg-[#151D29] dark:border-[#27374d]"
+        className={`p-6 ${
+          checkTheme ? "text-white bg-[#151D29] border-[#27374d]" : "bg-white"
         } rounded-xl flex flex-col gap-6 2xl:w-[800px] w-[600px]`}
       >
         <div className="flex justify-between">
@@ -33,8 +32,8 @@ const Popup = () => {
           </h4>
           <input
             type="text"
-            className={`text-sm  bg-white p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc] ${
-              checkTheme && "dark:bg-[#242c39] dark:border-none"
+            className={`text-sm p-2 focus:outline-none flex-1 border-[1px] rounded-[10px]  ${
+              checkTheme ? "bg-[#242c39] border-none" : "bg-white border-[#ccc]"
             }`}
             name="chatgpt-prompt"
           />
@@ -45,8 +44,8 @@ const Popup = () => {
           </h4>
           <textarea
             name="chatgpt-input"
-            className={`text-sm bg-white min-h-[180px] max-h-max p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc] ${
-              checkTheme && "dark:bg-[#242c39] dark:border-none"
+            className={`text-sm min-h-[180px] max-h-max p-2 focus:outline-none flex-1 border-[1px] rounded-[10px]  ${
+              checkTheme ? "bg-[#242c39] border-none" : "bg-white border-[#ccc]"
             }`}
           />
         </div>

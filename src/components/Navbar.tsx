@@ -9,9 +9,10 @@ const Navbar = () => {
   return (
     <div
       className={`border-b-[1px] ${
-        checkTheme &&
-        "dark:bg-[#27374d] dark:border-[#27374d] dark:text-white dark:shadow-none"
-      } bg-[#F8F8F8] border-lightGrey  shadow-gray-100  shadow-md w-full h-max px-3 py-4 flex gap-4 items-center `}
+        checkTheme
+          ? "bg-[#27374d] border-[#27374d] text-white shadow-none"
+          : "bg-[#F8F8F8] border-lightGrey  shadow-gray-100"
+      }   shadow-md w-full h-max px-3 py-4 flex gap-4 items-center `}
     >
       <div className="w-[50px] h-[50px] rounded-[50%] border-[2px] border-primary bg-secondary text-xl leading-[45px] text-center text-primary font-bold">
         {checkRole ? "YU" : "VI"}

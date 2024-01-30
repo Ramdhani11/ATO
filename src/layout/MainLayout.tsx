@@ -66,9 +66,11 @@ const MainLayout = () => {
     >
       {/* <div></div> */}
       <div
-        className={`duration-[400ms] ease-out bg-white ${
-          checkTheme ? "dark:bg-[#151D29] dark:border-[#27374d]" : ""
-        }  overflow-hidden w-full m-auto max-w-[1600px] h-screen flex lineMax:rounded-xl border-[1px] border-lightGrey relative`}
+        className={`duration-[400ms] ease-out ${
+          checkTheme
+            ? "bg-[#151D29] border-[#27374d]"
+            : "border-lightGrey bg-white"
+        }  overflow-hidden w-full m-auto max-w-[1600px] h-screen flex lineMax:rounded-xl border-[1px]  relative`}
       >
         <Menu />
         <Sidebar />

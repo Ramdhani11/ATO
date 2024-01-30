@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { RoleContext } from "../layout/MainLayout";
 import { useFetcher } from "react-router-dom";
+import { close } from "../assets";
 const SettingPopup = () => {
   const { checkTheme, role, setting, toggleSetting, toggleTheme, toggleRole } =
     useContext(RoleContext);
@@ -13,24 +14,31 @@ const SettingPopup = () => {
     <div
       className={`${
         setting ? "absolute" : "hidden"
-      } top-0 right-0 left-0 bottom-0 bg-[#0000000c] ${
-        checkTheme && "dark:bg-[#27374DB2]"
+      } top-0 right-0 left-0 bottom-0  ${
+        checkTheme ? "bg-[#27374DB2]" : "bg-[#0000000c]"
       }  z-20 backdrop-blur-[2px] grid place-content-center`}
       onClick={toggleSetting}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`p-6 bg-white ${
-          checkTheme &&
-          "dark:text-white dark:bg-[#151D29] dark:border-[#27374d]"
-        } rounded-xl flex flex-col gap-3 2xl:w-[500px] w-[400px]`}
+        className={`p-6 ${
+          checkTheme ? "text-white bg-[#151D29] border-[#27374d]" : "bg-white "
+        } rounded-xl flex flex-col  2xl:w-[500px] w-[400px]`}
       >
-        <div className="pb-3 flex justify-between w-full">
-          <h3 className="text-xl w-full font-semibold text-center">Settings</h3>
+        <div className="pb-10 flex justify-between w-full relative">
+          <h3 className="text-2xl w-full font-semibold text-center text-primary">
+            Settings
+          </h3>
+          <img
+            onClick={toggleSetting}
+            src={close}
+            className="cursor-pointer absolute right-3 top-2"
+            alt="close"
+          />
           {/* <ToggleButton /> */}
         </div>
-        <div className="flex justify-between ">
-          <h4 className=" text-md pb-3 font-semibold">
+        <div className="py-3 border-t-[1px] border-[#A7B5C4] flex justify-between ">
+          <h4 className=" text-md  font-semibold">
             {checkRole ? "Appearance" : "外観"}
           </h4>
           <label className="switch">
@@ -38,8 +46,8 @@ const SettingPopup = () => {
             <span className="slider round theme"></span>
           </label>
         </div>
-        <div className="flex justify-between ">
-          <h4 className="text-md pb-3 font-semibold">
+        <div className="flex justify-between border-y-[1px] border-[#A7B5C4] py-3">
+          <h4 className="text-md font-semibold">
             {checkRole ? "Chat Auto-Translation" : "チャット自動翻訳"}
           </h4>
           <label className="switch">
@@ -47,7 +55,7 @@ const SettingPopup = () => {
             <span className="slider round"></span>
           </label>
         </div>
-        <div className="flex justify-between ">
+        <div className="py-3 border-b-[1px] border-[#A7B5C4] flex justify-between ">
           <div className="leading-4">
             <h4 className="text-md font-semibold">
               {checkRole ? "Developer Setting" : "開発者設定"}{" "}
@@ -72,9 +80,9 @@ const SettingPopup = () => {
             </button>
           </fetcher.Form>
           <div
-            className={`bg-white border-[1px] border-red-600  cursor-pointer py-2 rounded-md text-center font-bold ${
-              checkTheme && "dark:bg-red-600 dark:text-white"
-            } text-red-600`}
+            className={` border-[1px] border-red-600  cursor-pointer py-2 rounded-md text-center font-bold ${
+              checkTheme ? "bg-red-600 text-white" : "bg-white text-red-600"
+            } `}
           >
             {checkRole ? "Delete Account" : "アカウントを削除する"}
           </div>

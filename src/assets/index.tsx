@@ -17,8 +17,10 @@ import logo_ATO from "./Ato.svg";
 import logo_chat from "./T-Chat.svg";
 import close_eye from "./mdi_eye-off.svg";
 import open_eye from "./mdi_eye.svg";
+import close from "./close.svg";
 
 export {
+  close,
   logo_ATO,
   logo_MTG,
   logo_chat,

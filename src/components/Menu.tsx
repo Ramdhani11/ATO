@@ -18,16 +18,18 @@ const Menu = () => {
         </div>
         <div className="flex flex-col gap-[10px] items-center  relative top-[30px]">
           <div
-            className={`bg-lightGrey cursor-pointer rounded-lg hover:bg-lightGrey ${
-              checkTheme ? "dark:hover:bg-[#A7B5C41A] dark:bg-[#A7B5C41A]" : ""
+            className={`cursor-pointer rounded-lg  ${
+              checkTheme
+                ? "hover:bg-[#A7B5C41A] bg-[#A7B5C41A]"
+                : "bg-lightGrey hover:bg-lightGrey"
             }  w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center`}
           >
             <img src={chats} alt="chats" />
           </div>
           <div
             onClick={() => toast.info("Feature not yet available!")}
-            className={`cursor-pointer rounded-lg hover:bg-lightGrey ${
-              checkTheme ? "dark:hover:bg-[#A7B5C41A]" : ""
+            className={`cursor-pointer rounded-lg  ${
+              checkTheme ? "hover:bg-[#A7B5C41A]" : "hover:bg-lightGrey"
             }  w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center`}
           >
             <img src={person} alt="person" />
@@ -35,8 +37,8 @@ const Menu = () => {
           {checkRole ? (
             <div
               onClick={togglePopup}
-              className={`cursor-pointer rounded-lg hover:bg-lightGrey ${
-                checkTheme ? "dark:hover:bg-[#A7B5C41A]" : ""
+              className={`cursor-pointer rounded-lg  ${
+                checkTheme ? "hover:bg-[#A7B5C41A]" : "hover:bg-lightGrey"
               }  w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center`}
             >
               <img src={chatgpt} alt="chatgpt" />
@@ -47,8 +49,8 @@ const Menu = () => {
       <div
         onClick={toggleSetting}
         className={`cursor-pointer ${
-          checkTheme ? "dark:hover:bg-[#A7B5C41A]" : ""
-        }  hover:bg-lightGrey rounded-lg w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center place-content-center`}
+          checkTheme ? "hover:bg-[#A7B5C41A]" : "hover:bg-lightGrey"
+        }   rounded-lg w-[72px] h-[56px] py-[8px] px-[12px] grid place-items-center place-content-center`}
       >
         <img src={setting} alt="user" />
       </div>

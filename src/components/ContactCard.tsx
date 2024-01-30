@@ -4,11 +4,11 @@ import dayjs from "dayjs";
 import useSWR from "swr";
 import { fecther } from "./Mainbar";
 
-interface CardProps {
-  active?: boolean;
-}
+// interface CardProps {
+//   active?: boolean;
+// }
 
-const ContactCard = ({ active }: CardProps) => {
+const ContactCard = () => {
   const { role, checkTheme } = useContext(RoleContext);
 
   const checkRole = role === "107";
@@ -42,9 +42,9 @@ const ContactCard = ({ active }: CardProps) => {
 
   return (
     <div
-      className={`w-[412px] px-[8px] flex gap-4 items-center ${
-        active && "bg-secondary"
-      } ${checkTheme && "dark:bg-[#27374d]"} py-4 rounded-[10px]`}
+      className={`w-[412px] px-[8px] flex gap-4 items-center  ${
+        checkTheme ? "bg-[#27374d]" : "bg-secondary"
+      } py-4 rounded-[10px]`}
     >
       <div className="w-[50px] h-[50px] rounded-[50%] border-[2px] border-primary bg-secondary text-xl leading-[45px] text-center text-primary font-bold">
         {checkRole ? "YU" : "VI"}
@@ -55,7 +55,7 @@ const ContactCard = ({ active }: CardProps) => {
           <h3>{isLoading ? "" : !formatHour ? "" : formatHour}</h3>
         </div>
         <div className="flex justify-between">
-          <span className={`${checkTheme && "dark:text-[#8198a8]"}`}>
+          <span className={`${checkTheme ? "text-[#8198a8]" : "text-black"}`}>
             {isLoading ? "Wait..." : !headMessage ? "" : headMessage}
           </span>
 

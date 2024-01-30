@@ -116,32 +116,37 @@ const Mainbar = () => {
 
       <div
         className={`flex-1 px-3 py-3 ${
-          checkTheme && "dark:text-white scroll"
+          checkTheme ? "text-white scroll" : "text-black"
         } flex flex-col gap-2 overflow-hidden overflow-y-auto`}
       >
         {filterData?.map((data: ChatbarProps) => {
           return <ChatBar key={data.id} data={data} />;
         })}
-        {loader && (
-          <div className="flex justify-end">
-            <div className="loader" />
-          </div>
-        )}
+        {/* {loader && (
+        )} */}
+        {/* <div className="flex justify-end bg-red-200 z-10">
+          <div className="loader bg-red-100" />
+        </div> */}
+        {/* <div className="relative flex flex-1 justify-end">
+          <div className="loader absolute bg-red-300"></div>
+        </div> */}
         <div ref={refDiv}></div>
       </div>
-      <div
-        className={`bg-lightGrey ${checkTheme && "dark:bg-[#27374d] "} p-3 `}
-      >
+      <div className={` ${checkTheme ? "bg-[#27374d]" : "bg-lightGrey"} p-3 `}>
         <div className="pb-3">
           <div className="">
             <div className="flex gap-2">
               <div className="w-[20px] h-[20px] overflow-hidden rounded-[50%]">
                 <img src={gpt} alt="gpt-icon" />
               </div>
-              <span className="text-[#8a8a8a] dark:text-[#9DB2BF] text-sm font-semibold">
+              <span
+                className={`${
+                  checkTheme ? "text-[#9DB2BF]" : "text-[#8a8a8a]"
+                } text-sm font-semibold`}
+              >
                 {checkRole
-                  ? "Auto-translate by ChatGPT-4"
-                  : "ChatGPT-4 による自動翻訳"}
+                  ? "Auto-translate by ChatGPT-4 "
+                  : "ChatGPT-4 による自動翻訳 "}
               </span>
             </div>
           </div>
@@ -159,10 +164,11 @@ const Mainbar = () => {
             value={text}
             onKeyDown={(e) => handleEnter(e)}
             type="text"
-            className={`bg-white ${
-              checkTheme &&
-              "dark:bg-[#242c39] dark:text-white dark:border-[#242c39]"
-            } p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] border-[#ccc]`}
+            className={` ${
+              checkTheme
+                ? "bg-[#242c39] text-white border-[#242c39]"
+                : "bg-white border-[#ccc]"
+            } p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] `}
             onChange={(e) => setText(e.target.value)}
           />
           <div className="py-1">
