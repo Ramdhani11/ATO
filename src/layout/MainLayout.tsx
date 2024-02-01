@@ -2,7 +2,6 @@ import { createContext, useState } from "react";
 import Mainbar from "../components/Mainbar";
 import Menu from "../components/Menu";
 import Sidebar from "../components/Sidebar";
-import { ChatbarProps } from "../components/ChatBar";
 import Popup from "../components/Popup";
 import { Toaster } from "sonner";
 import SettingPopup from "../components/SettingPopup";
