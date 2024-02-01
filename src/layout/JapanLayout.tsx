@@ -1,17 +1,11 @@
 import { createContext, useState } from "react";
-import Mainbar from "../components/Mainbar";
-import Menu from "../components/Menu";
-import Sidebar from "../components/Sidebar";
-import { ChatbarProps } from "../components/ChatBar";
-import Popup from "../components/Popup";
+
 import { Toaster } from "sonner";
-import SettingPopup from "../components/SettingPopup";
 import Coookies from "js-cookie";
 import { Navigate } from "react-router-dom";
+import { Mainbar, Menu, SettingPopup, Sidebar } from "../components/jp";
 
 export type GlobalContent = {
-  popup?: boolean;
-  togglePopup?: () => void;
   theme: string;
   toggleTheme?: () => void;
   toggleSetting?: () => void;
@@ -24,8 +18,7 @@ export const RoleContext = createContext<GlobalContent>({
   setting: false,
 });
 
-const MainLayout = () => {
-  const [popup, setPopup] = useState(false);
+const JapanLayout = () => {
   const [theme, setTheme] = useState("light");
   const [setting, setSetting] = useState(false);
 
@@ -33,10 +26,6 @@ const MainLayout = () => {
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
-  };
-
-  const togglePopup = () => {
-    setPopup(!popup);
   };
   const toggleSetting = () => {
     setSetting(!setting);
@@ -48,15 +37,7 @@ const MainLayout = () => {
 
   return (
     <RoleContext.Provider
-      value={{
-        popup,
-        togglePopup,
-        theme,
-        toggleTheme,
-        checkTheme,
-        toggleSetting,
-        setting,
-      }}
+      value={{ theme, toggleTheme, checkTheme, toggleSetting, setting }}
     >
       {/* <div></div> */}
       <div
@@ -69,7 +50,6 @@ const MainLayout = () => {
         <Menu />
         <Sidebar />
         <Mainbar />
-        <Popup />
         <Toaster position="top-center" duration={800} />
         <SettingPopup />
       </div>
@@ -77,4 +57,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default JapanLayout;

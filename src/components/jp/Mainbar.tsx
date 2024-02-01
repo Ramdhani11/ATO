@@ -1,8 +1,8 @@
 import { KeyboardEvent, useContext, useEffect, useRef, useState } from "react";
-import { arrow, gpt, pin } from "../assets";
+import { arrow, gpt, pin } from "../../assets";
 import Navbar from "./Navbar";
-import { RoleContext } from "../layout/MainLayout";
-import { axiosInstance } from "../config/axiosInstance";
+import { RoleContext } from "../../layout/JapanLayout";
+import { axiosInstance } from "../../config/axiosInstance";
 import useSWR from "swr";
 import { toast } from "sonner";
 import ContainerChat from "./ContainerChat";
@@ -22,25 +22,12 @@ const Mainbar = () => {
 
   const { checkTheme } = useContext(RoleContext);
 
-  // const chatroom = async () => {
-  //   try {
-  //     await axiosInstance
-  //       .post("/chatrooms", {
-  //         user1_id: 2,
-  //         user2_id: 1,
-  //       })
-  //       .then((res) => console.log(res.data));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const postMessage = async (text: string) => {
     const checkCompany = Cookies.get("company") === "107";
     try {
       setLoader(true);
       await axiosInstance.post("/conversations", {
-        user_id: Number(Cookies.get("userId")),
+        user_id: 1,
         speaker: Cookies.get("company"),
         company_id: checkCompany ? 2 : 1,
         chat_room_id: 1,
@@ -82,7 +69,6 @@ const Mainbar = () => {
       return;
     }
     await postMessage(text);
-    // await chatroom();
   };
 
   return (
@@ -105,7 +91,7 @@ const Mainbar = () => {
 
         <div ref={refDiv}></div>
       </div>
-      <div className={` ${checkTheme ? "bg-[#27374d]" : "bg-lightGrey"} p-3 `}>
+      <div className={`${checkTheme ? "bg-[#27374d]" : "bg-lightGrey"} p-3 `}>
         <div className="pb-3">
           <div className="">
             <div className="flex gap-2">
@@ -117,7 +103,7 @@ const Mainbar = () => {
                   checkTheme ? "text-[#9DB2BF]" : "text-[#8a8a8a]"
                 } text-sm font-semibold`}
               >
-                {loader ? "Translating..." : "Auto-translate by ChatGPT-4 "}
+                {loader ? "翻訳する..." : "ChatGPT-4 による自動翻訳 "}
               </span>
             </div>
           </div>
@@ -144,7 +130,7 @@ const Mainbar = () => {
               checkTheme
                 ? "bg-[#242c39] text-white border-[#242c39]"
                 : "bg-white border-[#ccc]"
-            } p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] font-normal `}
+            } p-2 focus:outline-none flex-1 border-[1px] rounded-[10px] font-medium`}
             onChange={(e) => setText(e.target.value)}
           />
           <div className="py-1">

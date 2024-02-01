@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { RoleContext } from "../layout/MainLayout";
+import { RoleContext } from "../../layout/JapanLayout";
 import { useFetcher } from "react-router-dom";
-import { close } from "../assets";
+import { close } from "../../assets";
 const SettingPopup = () => {
   const { checkTheme, setting, toggleSetting, toggleTheme } =
     useContext(RoleContext);
@@ -36,14 +36,14 @@ const SettingPopup = () => {
           {/* <ToggleButton /> */}
         </div>
         <div className="py-3 border-t-[1px] border-[#A7B5C4] flex justify-between ">
-          <h4 className=" text-md  font-semibold">Appearance</h4>
+          <h4 className=" text-md  font-semibold">"外観"</h4>
           <label className="switch">
             <input type="checkbox" onChange={toggleTheme} name="theme" />
             <span className="slider round theme"></span>
           </label>
         </div>
         <div className="flex justify-between border-y-[1px] border-[#A7B5C4] py-3">
-          <h4 className="text-md font-semibold">Chat Auto-Translation</h4>
+          <h4 className="text-md font-semibold">チャット自動翻訳</h4>
           <label className="switch">
             <input type="checkbox" defaultChecked name="chat" />
             <span className="slider round chat"></span>
@@ -56,7 +56,7 @@ const SettingPopup = () => {
               type="submit"
               className="bg-primary w-full cursor-pointer py-2 rounded-md text-center font-bold text-white"
             >
-              Logout
+              ログアウト
             </button>
           </fetcher.Form>
           <div
@@ -64,7 +64,7 @@ const SettingPopup = () => {
               checkTheme ? "bg-red-600 text-white" : "bg-white text-red-600"
             } `}
           >
-            Delete Account
+            アカウントを削除する
           </div>
         </div>
       </div>

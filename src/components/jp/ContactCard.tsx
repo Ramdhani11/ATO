@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { RoleContext } from "../layout/MainLayout";
+import { RoleContext } from "../../layout/JapanLayout";
 import dayjs from "dayjs";
 import useSWR from "swr";
 import { fecther } from "./Mainbar";
@@ -28,14 +28,14 @@ const ContactCard = () => {
     }
   }
 
-  const originalMessage = lastData
-    ? truncateString(lastData.english_text, 30)
+  const transtaledMessage = lastData
+    ? truncateString(lastData.japanese_text, 20)
     : "";
 
   const headMessage =
     Cookies.get("company") === lastData?.speaker
-      ? `You : ${originalMessage} `
-      : originalMessage;
+      ? `You : ${transtaledMessage} `
+      : transtaledMessage;
 
   return (
     <div
@@ -48,15 +48,11 @@ const ContactCard = () => {
       </div>
       <div className="flex flex-col flex-1">
         <div className="flex justify-between font-semibold">
-          <h3>ATO - Yuki</h3>
+          <h3>107 - Vincent</h3>
           <h3>{isLoading ? "" : !formatHour ? "" : formatHour}</h3>
         </div>
         <div className="flex justify-between">
-          <span
-            className={`${
-              checkTheme ? "text-[#8198a8]" : "text-black"
-            } font-normal`}
-          >
+          <span className={`${checkTheme ? "text-[#8198a8]" : "text-black"}`}>
             {isLoading ? "Wait..." : !headMessage ? "" : headMessage}
           </span>
 

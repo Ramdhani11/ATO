@@ -1,7 +1,21 @@
-import { Form } from "react-router-dom";
+import { Form, Navigate } from "react-router-dom";
 import { logo_ATO } from "../assets";
+import Cookie from "js-cookie";
+import axios from "axios";
+import useSWR from "swr";
+
+const fecther = (url: string) => axios.get(url).then((res) => res.data);
 
 const Personal = () => {
+  if (!Cookie.get("token")) {
+    return <Navigate to={"/register"} replace={true} />;
+  }
+
+  const { data, isLoading } = useSWR(
+    `${import.meta.env.VITE_BASE_URL}/roles`,
+    fecther
+  );
+
   return (
     <div className="w-full flex flex-col items-center justify-center ">
       <div className="min-w-max w-[400px] hd:w-[440px] 2xl:w-[500px] p-5 flex flex-col justify-center items-center ">
@@ -24,7 +38,7 @@ const Personal = () => {
               autoComplete="false"
               id="name"
               type="text"
-              className="border-[1px] focus:outline-none mt-1 border-[#8a8a8a] py-2 px-3 rounded-md"
+              className="font-normal border-[1px] focus:outline-none mt-1 border-[#8a8a8a] py-2 px-3 rounded-md"
               name="name"
               placeholder="Enter Your Name"
             />
@@ -33,13 +47,18 @@ const Personal = () => {
             <label htmlFor="role" className="font-semibold">
               Role
             </label>
-            <input
-              id="role"
-              type="text"
-              className="border-[1px] focus:outline-none mt-1 border-[#8a8a8a] py-2 px-3 rounded-md"
+            <select
+              className="font-normal border-[1px] mt-1 focus:outline-none border-[#8a8a8a] w-full py-2 pl-3 rounded-md pr-5 text-[#8a8a8a] "
               name="role"
-              placeholder="Enter Your Role"
-            />
+              id="role"
+            >
+              {isLoading && "Loading..."}
+              {data?.map((data: any) => (
+                <option key={data.id} value={data.id}>
+                  {data.role_name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="hd:pt-[100px] fhd:pt-32  2xl:pt-44 w-full">

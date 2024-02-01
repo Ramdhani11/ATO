@@ -9,7 +9,7 @@ interface AuthProvider {
  * This represents some generic auth provider API, like Firebase.
  */
 export const fakeAuthProvider: AuthProvider = {
-  isAuthenticated: false,
+  isAuthenticated: true,
   async signin() {
     // await new Promise((r) => setTimeout(r, 500)); // fake delay
     fakeAuthProvider.isAuthenticated = true;

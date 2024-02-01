@@ -25,7 +25,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              className="border-[1px] focus:outline-none mt-1 border-[#8a8a8a] py-2 px-3 rounded-md"
+              className="border-[1px] focus:outline-none mt-1 border-[#8a8a8a] py-2 px-3 rounded-md font-normal"
               name="email"
               id="email"
               placeholder="Email Address"
@@ -38,7 +38,7 @@ const Login = () => {
             <div className="w-full relative">
               <input
                 type={seek ? "password" : "text"}
-                className="border-[1px] mt-1 focus:outline-none border-[#8a8a8a] w-full py-2 pl-3 rounded-md pr-5"
+                className="font-normal border-[1px] mt-1 focus:outline-none border-[#8a8a8a] w-full py-2 pl-3 rounded-md pr-5"
                 name="password"
                 id="password"
                 placeholder="Enter Password"
@@ -61,7 +61,7 @@ const Login = () => {
             </button>
             <p className="text-center pt-2">
               Dont have an account?{" "}
-              <Link to="/auth/register" className="text-primary cursor-pointer">
+              <Link to="/register" className="text-primary cursor-pointer">
                 Sign Up
               </Link>
             </p>

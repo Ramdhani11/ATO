@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { RoleContext } from "../layout/MainLayout";
+import { RoleContext } from "../../layout/JapanLayout";
 
 const Navbar = () => {
   const { checkTheme } = useContext(RoleContext);
@@ -16,7 +16,7 @@ const Navbar = () => {
         YU
       </div>
       <div className="flex flex-col leading-3">
-        <h3 className="text-lg  font-semibold">ATO - Yuki</h3>
+        <h3 className="text-lg  font-semibold">107 - Vincent</h3>
         <span className="text-slate-400">online</span>
       </div>
     </div>

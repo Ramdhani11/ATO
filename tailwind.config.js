@@ -14,6 +14,9 @@ export default {
       lineMax: "1600px",
       fhd: "1920px",
     },
+    fontFamily: {
+      body: ["Poppins", "sans-serif"],
+    },
   },
   plugins: [],
 };
