@@ -12,7 +12,7 @@ export const fecther = (url: string) =>
   axiosInstance.get(url).then((res) => res.data);
 
 const Mainbar = () => {
-  const { data, mutate } = useSWR("/conversations", fecther);
+  const { data, mutate } = useSWR("/conversations-by-chat-room-id/1", fecther);
 
   const [text, setText] = useState("");
 

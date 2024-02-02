@@ -12,7 +12,10 @@ import Cookies from "js-cookie";
 const ContactCard = () => {
   const { checkTheme } = useContext(RoleContext);
 
-  const { data, isLoading } = useSWR("/conversations", fecther);
+  const { data, isLoading } = useSWR(
+    "/conversations-by-chat-room-id/1",
+    fecther
+  );
   const lastData = data?.slice(-1)[0];
 
   const hour = dayjs(lastData?.date).hour();
@@ -33,8 +36,8 @@ const ContactCard = () => {
     : "";
 
   const headMessage =
-    Cookies.get("company") === lastData?.speaker
-      ? `You : ${transtaledMessage} `
+    lastData?.user_id === Number(Cookies.get("userId"))
+      ? `あなた : ${transtaledMessage} `
       : transtaledMessage;
 
   return (

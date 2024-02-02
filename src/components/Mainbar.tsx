@@ -12,7 +12,7 @@ export const fecther = (url: string) =>
   axiosInstance.get(url).then((res) => res.data);
 
 const Mainbar = () => {
-  const { data, mutate } = useSWR("/conversations", fecther);
+  const { data, mutate } = useSWR("/conversations-by-chat-room-id/1", fecther);
 
   const [text, setText] = useState("");
 
@@ -21,19 +21,6 @@ const Mainbar = () => {
   const refDiv = useRef<HTMLDivElement>(null);
 
   const { checkTheme } = useContext(RoleContext);
-
-  // const chatroom = async () => {
-  //   try {
-  //     await axiosInstance
-  //       .post("/chatrooms", {
-  //         user1_id: 2,
-  //         user2_id: 1,
-  //       })
-  //       .then((res) => console.log(res.data));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const postMessage = async (text: string) => {
     const checkCompany = Cookies.get("company") === "107";

@@ -25,7 +25,7 @@ const SettingPopup = () => {
       >
         <div className="pb-10 flex justify-between w-full relative">
           <h3 className="text-2xl w-full font-semibold text-center text-primary">
-            Settings
+            設定
           </h3>
           <img
             onClick={toggleSetting}

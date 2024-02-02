@@ -5,7 +5,7 @@ import { RoleContext } from "../../layout/JapanLayout";
 import { toast } from "sonner";
 
 const Sidebar = () => {
-  const { checkTheme } = useContext(RoleContext);
+  const { checkTheme, toggleList } = useContext(RoleContext);
 
   return (
     <div
@@ -16,7 +16,7 @@ const Sidebar = () => {
       <div className="flex w-full items-center justify-between">
         <h1 className="text-[32px] font-bold">"メッセージ"</h1>
         <div
-          onClick={() => toast.info("Feature not yet available!")}
+          onClick={toggleList}
           className="w-[32px] h-[32px] bg-primary rounded-[50%] cursor-pointer grid place-items-center"
         >
           <img src={plus} alt="plus" />
