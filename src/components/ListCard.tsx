@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { RoleContext } from "../layout/MainLayout";
-imp;
 
 const ListCard = () => {
   const { checkTheme } = useContext(RoleContext);
