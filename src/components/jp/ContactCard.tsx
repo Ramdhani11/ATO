@@ -47,7 +47,7 @@ const ContactCard = () => {
       } py-4 rounded-[10px]`}
     >
       <div className="w-[50px] h-[50px] rounded-[50%] border-[2px] border-primary bg-secondary text-xl leading-[45px] text-center text-primary font-bold">
-        YU
+        AN
       </div>
       <div className="flex flex-col flex-1">
         <div className="flex justify-between font-semibold">
