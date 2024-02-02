@@ -4,6 +4,8 @@ import { RoleContext } from "../../layout/JapanLayout";
 const Navbar = () => {
   const { checkTheme } = useContext(RoleContext);
 
+
+
   return (
     <div
       className={`border-b-[1px] ${
@@ -13,10 +15,10 @@ const Navbar = () => {
       }   shadow-md w-full h-max px-3 py-4 flex gap-4 items-center `}
     >
       <div className="w-[50px] h-[50px] rounded-[50%] border-[2px] border-primary bg-secondary text-xl leading-[45px] text-center text-primary font-bold">
-        YU
+        AN
       </div>
       <div className="flex flex-col leading-3">
-        <h3 className="text-lg  font-semibold">107 - Vincent</h3>
+        <h3 className="text-lg  font-semibold">107 - Anwar</h3>
         <span className="text-slate-400">online</span>
       </div>
     </div>

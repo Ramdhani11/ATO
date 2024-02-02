@@ -16,7 +16,7 @@ const Navbar = () => {
         YU
       </div>
       <div className="flex flex-col leading-3">
-        <h3 className="text-lg  font-semibold">ATO - Yuki</h3>
+        <h3 className="text-lg  font-semibold">ATO - Tezuka</h3>
         <span className="text-slate-400">online</span>
       </div>
     </div>
