@@ -19,7 +19,6 @@ export const routeActions: IActions = {
         email,
         password,
       });
-      console.log(res.data);
       Cookies.set("access", res.data.token);
       Cookies.set("userId", res.data.account.id);
       Cookies.set("name", res.data.account.name);
