@@ -53,7 +53,7 @@ const ContactCard = () => {
       </div>
       <div className="flex flex-col flex-1">
         <div className="flex justify-between font-semibold">
-          <h3>ATO - Yuki</h3>
+          <h3>ATO - Tezuka</h3>
           <h3>{isLoading ? "" : !formatHour ? "" : formatHour}</h3>
         </div>
         <div className="flex justify-between">
