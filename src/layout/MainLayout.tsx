@@ -7,8 +7,8 @@ import { Toaster } from "sonner";
 import SettingPopup from "../components/SettingPopup";
 import Coookies from "js-cookie";
 import { Navigate } from "react-router-dom";
-import ListContact from "../components/listContact";
 import OnLoad from "../components/OnLoad";
+import Lists from "../components/Lists";
 
 export type GlobalContent = {
   popup?: boolean;
@@ -78,7 +78,7 @@ const MainLayout = () => {
         }  overflow-hidden w-full m-auto max-w-[1600px] h-screen flex lineMax:rounded-xl border-[1px]  relative `}
       >
         <Menu />
-        {list ? <ListContact /> : <Sidebar />}
+        {list ? <Lists /> : <Sidebar />}
 
         {list ? <OnLoad /> : <Mainbar />}
         {/* <Mainbar /> */}
